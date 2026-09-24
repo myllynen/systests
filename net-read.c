@@ -47,16 +47,16 @@ int main(int argc, char **argv) {
   }
   printf("Reading %d megabytes from port %d... ", s, p);
   fflush(stdout);
+  if (clock_gettime(CLOCK_MONOTONIC, &t1) == -1) {
+    perror("clock_gettime");
+    exit(1);
+  }
   e = 0;
   for (i = 0; !e && i < s; i++) {
     for (j = 0; !e && j < 1024; j++) {
-      if (recvfrom(sd, mem, 1024, MSG_WAITALL, NULL, NULL) != 1024) {
+      if (recvfrom(sd, mem, 1024, 0, NULL, NULL) != 1024) {
         e = 1;
       }
-    }
-    if (i == 0 && clock_gettime(CLOCK_MONOTONIC, &t1) == -1) {
-      perror("clock_gettime");
-      exit(1);
     }
   }
   if (clock_gettime(CLOCK_MONOTONIC, &t2) == -1) {

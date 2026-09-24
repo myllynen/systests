@@ -36,7 +36,7 @@ int main(int argc, char **argv) {
     exit(1);
   }
   for (i = 0; i < sz; i++) {
-    if (read(fd, mem, mega) != mega) {
+    if (read(fd, mem, mega) != (ssize_t)mega) {
       break;
     }
   }

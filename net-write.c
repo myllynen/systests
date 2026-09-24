@@ -51,7 +51,7 @@ int main(int argc, char **argv) {
     perror("malloc");
     exit(1);
   }
-  ip = inet_ntop(AF_INET, &((struct sockaddr_in *)r->ai_addr)->sin_addr, mem, r->ai_addrlen);
+  ip = inet_ntop(AF_INET, &((struct sockaddr_in *)r->ai_addr)->sin_addr, mem, INET_ADDRSTRLEN);
   if (r->ai_canonname && strcmp(argv[1], r->ai_canonname)) {
     printf("Resolved %s to %s (%s).\n", argv[1], r->ai_canonname, ip);
     host = r->ai_canonname;

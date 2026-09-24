@@ -37,11 +37,13 @@ int main(int argc, char **argv) {
     exit(1);
   }
   for (i = 0; i < sz; i++) {
-    if (write(fd, mem, mega) != mega) {
+    if (write(fd, mem, mega) != (ssize_t)mega) {
       break;
     }
   }
-  fsync(fd);
+  if (fsync(fd) == -1) {
+    perror("fsync");
+  }
   if (clock_gettime(CLOCK_MONOTONIC, &t2) == -1) {
     perror("clock_gettime");
     exit(1);
